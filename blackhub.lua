@@ -3,6 +3,68 @@
 -- BLACK HUB | STEAL AN EGG
 -- MOBILE GUI
 --================================
+local TweenService = game:GetService("TweenService")
+
+-- Simpan ukuran dan posisi awal
+local originalSize = main.Size
+local originalPosition = main.Position
+
+-- Efek awal
+main.Size = UDim2.fromOffset(0, 0)
+main.BackgroundTransparency = 1
+
+title.TextTransparency = 1
+content.Visible = false
+
+-- Animasi zoom dan fade
+local zoom = TweenService:Create(
+    main,
+    TweenInfo.new(
+        0.65,
+        Enum.EasingStyle.Back,
+        Enum.EasingDirection.Out
+    ),
+    {
+        Size = originalSize,
+        BackgroundTransparency = 0
+    }
+)
+
+zoom:Play()
+zoom.Completed:Wait()
+
+-- Animasi judul
+local titleTween = TweenService:Create(
+    title,
+    TweenInfo.new(0.5),
+    {
+        TextTransparency = 0
+    }
+)
+
+titleTween:Play()
+titleTween.Completed:Wait()
+
+-- Tampilkan menu
+content.Visible = true
+
+-- Efek minimize
+local function smoothMinimize()
+    local tween = TweenService:Create(
+        main,
+        TweenInfo.new(
+            0.35,
+            Enum.EasingStyle.Quart,
+            Enum.EasingDirection.Out
+        ),
+        {
+            Size = UDim2.fromOffset(280, 50)
+        }
+    )
+    tween:Play()
+end
+
+print("BLACK HUB ANIMATION LOADED!")
 
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
